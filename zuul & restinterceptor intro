@@ -1,0 +1,64 @@
+zull netflix :
+==============
+
+-> JVM based router & multiple load balancer 
+
+JVM based router - if we have lots of microservice then if the request is coming, then its needs to get filtered and 
+sent to the target microservice, it is taken care by zuul
+
+purpose :
+instead of having lots of urls the purpose of the api gateway is to reduce the number of links such that 
+confusion is less 
+
+eg.
+if we have 3 urls 
+1) oc-web.mig.com/diaganostics 
+2) pc-web.mig.com/doctor-api
+3) olst-web.mig.com/patient
+
+then using api-gateway we can make all the above links unified so if we have a api gateway eg. "api-gateway.com"
+then api-gateway.com/diagnositics will lead to (1) url similarly for the other two urls 
+
+flow diagram: 
+============
+
+http request --> pre-filters --> route-filters --> post-filters  -----> http response 
+				   |		     |
+				   |		     |
+				    -----------> error-filters 
+
+microservice interact between req & response 
+
+pre-filter   - it filters to which service we need to send the request 
+route-filter - it routes to the microservice 
+post-filter  - it filter to which service we need to send the response 
+error-filter - it filters out the errors
+
+learning site:
+https://medium.com/@nepalBrothers/api-gateway-using-spring-boot-zuul-part-1-6fb943c8efb8
+
+Rest interceptor :
+==================
+
+main difference is that, the rest interceptor and the filters can be used any where. where as for other
+types it can be used in websocket layer only 
+
+
+-> the purpose of the restInterceptor is to make the basic call a single class 
+-> then if we need to call a specific service multiple times then we can use that single class to call the 
+services
+-> centralized is very usefull and thus it becomes more helpfull
+
+intercept means - இடைமறிப்பு (obstruct (someone or something) so as to prevent them from continuing 
+to a destination.)
+
+interceptor uses :
+================
+-> Request and response logging
+-> Retrying the requests with a configurable back off strategy
+-> Request denial based on certain request parameters
+-> Altering the request URL address
+
+site for learning 
+https://www.baeldung.com/spring-rest-template-interceptor
+
